@@ -28,7 +28,7 @@ function showPage (list, page) {
    let studentList = document.querySelector('.student-list');
    studentList.innerHTML = '';
   
-      for(let i = 0; i <= list.length; i++) {
+      for(let i = 0; i <= list.length -1; i++) {
          if(i >= startIndex && i < endIndex) {
                  let element = `  <li class="student-item cf">
                   <div class="student-details">
@@ -53,7 +53,7 @@ function showPage (list, page) {
    
 }
 
-showPage(data, 1)
+
 
 
 /*
@@ -64,20 +64,60 @@ This function will create and insert/append the elements needed for the paginati
 function addPagination(list) {
 
    let numberOfPangination = list.length / 9;
-   numberOfPangination = Math.floor(numberOfPangination);
+   numberOfPangination = Math.ceil(numberOfPangination);
 
    let linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
 
+  
+   
+
    for(let i = 1; i <= numberOfPangination; i++) {
-      element = ` <li>
-      <button type="button">${i}</button>
+      
+      let element = ` <li>
+      <button type="button" ${ i === 1 ? 'class="active"' : ''}>${i}</button>
       </li> `;
       linkList.insertAdjacentHTML('beforeend', element); 
+      
+
+    
+     
    }
+
+   
+   let listItems = linkList.getElementsByTagName('li');
+
+
+   for(let i = 0; i <= listItems.length -1; i++) {
+
+      let buttonLink = listItems[i].firstElementChild;
+
+      buttonLink.addEventListener('click', (e) => {
+
+         let button = e.target;
+         
+         for (let i = 0; i <= listItems.length - 1; i++) {
+            listItems[i].firstElementChild.className = '';
+         }
+   
+         
+          
+          button.className = 'active';
+        
+        showPage(data, button.textContent)
+          
+       
+         
+       });
+   
+   }
+   
+
   
 }
 
-addPagination(data);
+
 
 // Call functions
+showPage(data, 1)
+addPagination(data);
