@@ -2,9 +2,42 @@
 Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
-console.log(data[1].name.title);
-console.log(data[2].name.title);
+function dataPagination() {
+   let header = document.querySelector('.header');
+   let studentSearch = document.querySelector('.student-search');
+   let element = `<label for="search" class="student-search">
+   <input id="search" placeholder="Search by name...">
+   <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+   </label>
+   `;
+   header.insertAdjacentHTML('beforeend', element);
 
+   let input = document.querySelector('#search');
+   input.innerHTML = '';
+   input.addEventListener('keyup', (e) => {
+      if(e.target.value) {
+         let filter = e.target.value;
+
+         position = data.map(function(e) { return e.name.first; }).indexOf(filter);
+
+         console.log(position);
+
+         let finded = [];
+       
+         finded.push(data[position]);
+         
+         console.log(finded);
+
+         showPage(finded, 1)
+      }
+   });
+
+   input.addEventListener('keydown', (e) => {
+      if(e.target.value) {
+         showPage(data, 1)
+      }
+   });
+}
 
 
 
@@ -13,6 +46,11 @@ For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
+
+
+
+
+
 
 
 
@@ -119,5 +157,7 @@ function addPagination(list) {
 
 
 // Call functions
+
 showPage(data, 1)
 addPagination(data);
+dataPagination();
